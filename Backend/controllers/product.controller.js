@@ -1,4 +1,4 @@
-import Product from "../models/product.model.js";
+import Product from "../models/Product.js";
 import cloudinary from "../config/cloudinary.js";
 
 async function getProducts(req, res) {
@@ -53,6 +53,7 @@ async function createProduct(req, res) {
 
 async function updateProduct(req, res) {
    const {id} = req.params
+   
    const { name, description, price, category, stock } = req.body;
    const {image} = req.files;
 
@@ -62,6 +63,7 @@ async function updateProduct(req, res) {
     
    try {
     const product = await Product.findById(id);
+    if(!product) return res.status(404).json({ msg: "Product not found" });
     if(product){
        product.name = name || product.name;
        product.description = description || product.description;

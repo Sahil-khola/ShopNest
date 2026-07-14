@@ -1,8 +1,8 @@
 import express from "express";
 const router = express.Router();
+import { getAnalytics } from "../controllers/analytics.controller.js";
+import {protect,admin} from "../middlewares/authMiddleware.js";
 
-router.get("/", (req, res) => {
-    res.send("Analytics Route");
-});
+router.get("/",protect,admin ,getAnalytics);
 
 export default router;

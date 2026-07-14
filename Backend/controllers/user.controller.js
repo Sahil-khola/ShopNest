@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import User from "../models/User.model.js";
+import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 
 const genratetoken = (id) => {
