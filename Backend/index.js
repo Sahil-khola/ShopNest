@@ -13,13 +13,18 @@ import paymentRoute from "./routes/paymentRoute.js";
 import productRoute from "./routes/productRoute.js";
 import userRoute from "./routes/userRoute.js";
 
-const app = express();
-app.use(cors());
+const app = express(); 
+app.use(cors( 
+    {
+        origin: process.env.CLIENT_URL,
+        credentials: true,
+    }
+));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
     fileUpload({
-        useTempFiles: true,
+        useTempFiles: true, 
         tempFileDir: "tmp",
         createParentPath: true,
     }),

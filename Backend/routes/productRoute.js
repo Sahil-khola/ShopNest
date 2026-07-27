@@ -4,7 +4,7 @@ import { protect, admin} from "../middlewares/authMiddleware.js";
 import { getProducts, getProductById, createProduct, updateProduct, deleteProduct } from "../controllers/product.controller.js";
 
 // all products
-router.get("/", protect,admin, getProducts);
+router.get("/",  getProducts);
 router.post("/", protect, admin, createProduct);
 router.get("/:id", getProductById);
 router.delete("/:id", protect, admin, deleteProduct);

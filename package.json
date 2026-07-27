@@ -1,0 +1,25 @@
+{
+  "name": "shopnest",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": ["Sahil", "microservice"],
+  "homepage": "https://github.com/Sahil-khola/ShopNest#readme",
+  "bugs": { "url": "https://github.com/Sahil-khola/ShopNest/issues" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sahil-khola/ShopNest.git"
+  },
+  "license": "ISC",
+  "author": "Sahil Khola",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node -e \"require('child_process').spawn('npm', ['run','dev','--prefix','Backend'], {shell:true, stdio:'inherit'}); require('child_process').spawn('npm', ['run','dev','--prefix','Frontend'], {shell:true, stdio:'inherit'});\"",
+    "build": "node -e \"require('child_process').spawn('npm', ['run','build','--prefix','FRONTEND'], {shell:true, stdio:'inherit'});\"",
+    "start": "node -e \"require('child_process').spawn('npm', ['start','--prefix','BACKEND'], {shell:true, stdio:'inherit'}); require('child_process').spawn('npm', ['run','preview','--prefix','FRONTEND'], {shell:true, stdio:'inherit'});\"",
+    "install-all": "npm install && npm install --prefix BACKEND && npm install --prefix FRONTEND"
+  },
+  "dependencies": {
+    "concurrently": "^10.0.3"
+  }
+}
