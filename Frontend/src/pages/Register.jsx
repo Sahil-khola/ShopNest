@@ -1,13 +1,46 @@
-import React , {useContext ,useState} from 'react'
-import { AuthContext } from '../context/AuthContext';
-import { useNavigate, Link } from 'react-router-dom';
-
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate, Link } from "react-router-dom";
+import "../styles/auth.css";
 const Register = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-export default Register
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
+      const data = await res.json();
+      if(res.ok){
+        alert("Registration successful");
+        login(data.user);
+        navigate("/");
+      }
+    } catch (error) {
+      alert(error.message || "Registration failed")
+      console.error(error);
+    }
+  };
+
+  return(
+     <div className="auth-container">
+      <form onSubmit={handleSubmit} className="auth-form">
+        <h2>Register</h2>
+        <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
+        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}  required/>
+        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+        <button type="submit" className="btn">Register</button>
+        <p>Already have an account? <Link to="/login">Login</Link></p>
+      </form>
+  </div>
+  );
+};
+
+export default Register;

@@ -1,6 +1,8 @@
-import bcrypt from "bcrypt";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import sendMail from "../utils/sendMail.js";
+
 
 const genratetoken = (id) => {
     return jwt.sign({ id }, process.env.JWT_USER_KEY, {
@@ -42,7 +44,7 @@ const genratetoken = (id) => {
     `;
     
     // Send Mail
-    await sendEmail(email,`Welcome to ShopeNest -Your OTP` ,message);
+    await sendMail(email, `Welcome to ShopeNest - Your OTP`, message);
     res.status(201).json({ msg: "User created successfully",
         user: {
             id: newUser._id,
@@ -65,7 +67,7 @@ async function userLogin(req, res) {
 try {
     const { email, password } = req.body;
     // Validate input
-    if(!email,!password) return res.status(400).json({ msg: "All fields are required" });
+    if(!email || !password) return res.status(400).json({ msg: "All fields are required" });
 
     // Check if user exists
     const user = await User.findOne({email});

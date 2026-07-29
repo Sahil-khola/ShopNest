@@ -1,12 +1,20 @@
+import './styles/global.css'
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from  './pages/Home'
-import './styles/global.css'
 import About from './pages/About'
 import ReturnPolicy from './pages/ReturnPolicy'
 import Disclamer from './pages/Disclamer'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import ProductDetails from './pages/ProductDetails'
+import Shop from './pages/Shop'
+import Cart from './pages/Cart'
+import Checkout from './pages/Checkout'
+import OrderSuccess from './pages/OrderSuccess'
+import Profile from './pages/Profile'
 
 const App = () => {
   return (
@@ -17,6 +25,14 @@ const App = () => {
         <Route path="/about" element={<About/>} />
         <Route path="/return" element={<ReturnPolicy/>} />
         <Route path="/disclaimer" element={<Disclamer/>} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/register" element={<Register/>} />
+        <Route path="/product/:id" element={<ProductDetails/>} />
+        <Route path="/shop" element={<Shop/>} />
+        <Route path="/cart" element={<Cart/>} />
+        <Route path="/Checkout" element={<Checkout/>} />
+        <Route path="/ordersuccess" element={<OrderSuccess/>} />
+        <Route path="/profile" element={<Profile/>} />
       </Routes>
       <Footer />
     </Router>
@@ -24,3 +40,5 @@ const App = () => {
 }
 
 export default App
+
+

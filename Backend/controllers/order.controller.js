@@ -1,25 +1,44 @@
 import Order from "../models/Order.js";
 import sendMail from "../utils/sendMail.js";
 
-async function createProduct(req,res) {
+async function createProduct(req, res) {
     try {
-        const {items,totalAmount,address,paymentId} = req.body;
-        if(!items || !totalAmount || !address || !paymentId) {
+        const { items, totalAmount, address, paymentId } = req.body;
+
+        if (!Array.isArray(items) || items.length === 0 || !totalAmount || !address || !paymentId) {
             return res.status(400).json({ msg: "All fields are required" });
-        }else{
-            const order = await Order.create({user:req.user._id,items,totalAmount,address,paymentId});
-            const message = `Dear ${req.user.name}, \n\n Thank you for Your Order ! Your Order has been Successfully created with the following 
-            details \n\n Order Id : ${order._id} \n\n Total Amount : ${order.totalAmount} \n\n Address : ${order.address} \n\n Payment Id : ${order.paymentId} \n\n Thank you for Your Order !`;
-            await sendMail(req.user.email,"Order created successfully",message);
-            res.status(201).json({ msg: "Order created successfully", order });
         }
+
+        const orderItems = items.map((item) => ({
+            productId: item.productId || item._id,
+            qty: item.qty || item.quantity || 1,
+            price: item.price,
+        }));
+
+        const order = await Order.create({
+            user: req.user._id,
+            items: orderItems,
+            totalAmount,
+            address,
+            paymentId,
+        });
+
+        const message = `Dear ${req.user.name},\n\nThank you for your order.\n\nOrder Id: ${order._id}\nTotal Amount: ${order.totalAmount}\nPayment Id: ${order.paymentId}\n\nThank you for shopping with ShopNest.`;
+
+        try {
+            await sendMail(req.user.email, "Order created successfully", message);
+        } catch (mailError) {
+            console.error("Order confirmation email failed:", mailError.message);
+        }
+
+        res.status(201).json({ msg: "Order created successfully", order });
     } catch (error) {
         res.status(500).json({ msg: "Internal server error", error: error.message });
     }
 }
 async function getMyOrders(req,res) {
     try {
-        const orders = await Order.find({user:req.user._id}).populate("items.productId","name email");
+        const orders = await Order.find({user:req.user._id}).populate("items.productId","name price imageUrl");
         res.status(200).json({ orders });
     } catch (error) {
         res.status(500).json({ msg: "Internal server error", error: error.message });
@@ -45,8 +64,5 @@ async function updateOrderStatus(req,res) {
         res.status(500).json({ msg: "Internal server error", error: error.message });
     }
 }
-
-
-
 
 export { createProduct, getMyOrders, getAllOrders, updateOrderStatus };
