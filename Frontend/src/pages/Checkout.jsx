@@ -18,13 +18,14 @@ const Checkout = () => {
 
   const handlePayment = async () => {
     try {
-      const orderRes = await fetch('/api/payment/order', {
+      const orderRes = await fetch('/api/payment/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: totalPrice })
       });
       const orderData = await orderRes.json();
-
+      console.log(orderData);
+      
       if (!orderRes.ok) {
         // Razorpay unconfigured exception handler
         const fallback = window.confirm("Razorpay keys unconfigured on backend. Use Student Bypass Mode to place test order?");
