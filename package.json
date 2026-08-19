@@ -13,12 +13,12 @@
   "author": "Sahil Khola",
   "type": "commonjs",
   "main": "index.js",
-  "scripts": {
-    "dev": "concurrently \"npm run dev --prefix Backend\" \"npm run dev --prefix Frontend\"",
-    "build": "node -e \"require('child_process').spawn('npm', ['run','build','--prefix','Frontend'], {shell:true, stdio:'inherit'});\"",
-    "start": "node -e \"require('child_process').spawn('npm', ['start','--prefix','Backend'], {shell:true, stdio:'inherit'}); require('child_process').spawn('npm', ['run','preview','--prefix','Frontend'], {shell:true, stdio:'inherit'});\"",
-    "install-all": "npm install && npm install --prefix Backend && npm install --prefix Frontend"
-  },
+"scripts": {
+  "dev": "concurrently \"npm run dev --prefix Backend\" \"npm run dev --prefix Frontend\"",
+  "build": "npm run build --prefix Frontend",
+  "start": "node -e \"require('child_process').spawn('npm', ['start','--prefix','Backend'], {shell:true, stdio:'inherit'}); require('child_process').spawn('npm', ['run','preview','--prefix','Frontend'], {shell:true, stdio:'inherit'});\"",
+  "install-all": "npm install && npm install --prefix Backend && npm install --prefix Frontend"
+},
   "dependencies": {
     "concurrently": "^10.0.3"
   }
