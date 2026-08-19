@@ -28,7 +28,7 @@ const About = () => {
     <div style={containerStyle}>
       <img
         src="/dp.jpg"
-        alt="@theshivanshvasu"
+        alt="@Sahil Khola"
         style={{ width: '180px', height: '180px', borderRadius: '50%', objectFit: 'cover', border: '4px solid #f97316', marginBottom: '20px', boxShadow: '0 4px 20px rgba(249, 115, 22, 0.4)' }}
       />
       <h2 style={{ fontSize: '2.5rem', marginBottom: '10px', color: '#fff' }}>About Me</h2>

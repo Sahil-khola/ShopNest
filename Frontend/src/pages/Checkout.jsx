@@ -21,7 +21,7 @@ const Checkout = () => {
       const orderRes = await fetch('/api/payment/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: totalPrice })
+        body: JSON.stringify({ totalAmount: totalPrice })
       });
       const orderData = await orderRes.json();
       console.log(orderData);

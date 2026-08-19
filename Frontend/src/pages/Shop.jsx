@@ -8,11 +8,13 @@ useEffect(() => {
     const fetchProducts = async () => {
         try {
         const res = await fetch("/api/products", {
-            contentType: "application/json",
             method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
         });
         const data = await res.json();
-        setProducts(data.products);
+        setProducts(Array.isArray(data) ? data : (data.products || []));
      
     } catch (error) {
         alert(error.message);
@@ -21,7 +23,7 @@ useEffect(() => {
     }
     }
     fetchProducts();
-})
+}, [])
   return (
     <div>
       {loading ? (

@@ -2,12 +2,11 @@ import Product from "../models/Product.js";
 import cloudinary from "../config/cloudinary.js";
 
 async function getProducts(req, res) {
-  const user = req.user;
   try {
-    const products = await Product.find();
-    res.status(200).json({ products });
+    const product = await Product.find({});
+    res.json(product);
   } catch (error) {
-    res.status(500).json({ msg: "Internal server error" });
+    res.status(500).json({ message: error.message });
   }
 }
 

@@ -8,9 +8,12 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch('/api/products');
+        const res = await fetch('/api/products?limit=5');
+        if (!res.ok) {
+          throw new Error(`Products request failed with ${res.status}`);
+        }
         const data = await res.json();
-        setProducts(data.products.slice(0,5 )); // Featured products
+        setProducts(Array.isArray(data) ? data : (data.products || []));
       } catch (error) {
         console.error(error);
       } finally {

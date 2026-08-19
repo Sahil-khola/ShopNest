@@ -5,6 +5,9 @@ dotenv.config();
 
 async function createdOrder(req,res) {
     try {
+        if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+            return res.status(500).json({ msg: "Razorpay keys not configured", error: "RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET are missing in .env" });
+        }
         const instance = new Razorpay({
             key_id: process.env.RAZORPAY_KEY_ID,
             key_secret: process.env.RAZORPAY_KEY_SECRET,

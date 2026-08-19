@@ -14,10 +14,10 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "dev": "node -e \"require('child_process').spawn('npm', ['run','dev','--prefix','Backend'], {shell:true, stdio:'inherit'}); require('child_process').spawn('npm', ['run','dev','--prefix','Frontend'], {shell:true, stdio:'inherit'});\"",
-    "build": "node -e \"require('child_process').spawn('npm', ['run','build','--prefix','FRONTEND'], {shell:true, stdio:'inherit'});\"",
-    "start": "node -e \"require('child_process').spawn('npm', ['start','--prefix','BACKEND'], {shell:true, stdio:'inherit'}); require('child_process').spawn('npm', ['run','preview','--prefix','FRONTEND'], {shell:true, stdio:'inherit'});\"",
-    "install-all": "npm install && npm install --prefix BACKEND && npm install --prefix FRONTEND"
+    "dev": "concurrently \"npm run dev --prefix Backend\" \"npm run dev --prefix Frontend\"",
+    "build": "node -e \"require('child_process').spawn('npm', ['run','build','--prefix','Frontend'], {shell:true, stdio:'inherit'});\"",
+    "start": "node -e \"require('child_process').spawn('npm', ['start','--prefix','Backend'], {shell:true, stdio:'inherit'}); require('child_process').spawn('npm', ['run','preview','--prefix','Frontend'], {shell:true, stdio:'inherit'});\"",
+    "install-all": "npm install && npm install --prefix Backend && npm install --prefix Frontend"
   },
   "dependencies": {
     "concurrently": "^10.0.3"
