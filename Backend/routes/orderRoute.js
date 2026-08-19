@@ -10,4 +10,4 @@ router.get("/myOrders",protect,getMyOrders);
 router.get("/",protect,admin,getAllOrders);
 router.put("/orderStatus/:id",protect,admin,updateOrderStatus);
 
-export default router;
+export default router; 

@@ -25,7 +25,7 @@ A full-stack e-commerce platform built with the MERN stack, featuring user authe
 - Razorpay (payment gateway)
 - Nodemailer (order emails)
 - Cloudinary (image uploads)
-- Express File Upload / Multer
+- Express File Upload 
 
 ### Frontend
 - React 19
