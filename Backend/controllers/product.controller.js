@@ -54,11 +54,13 @@ async function updateProduct(req, res) {
    const {id} = req.params
    
    const { name, description, price, category, stock } = req.body;
-   const {image} = req.files;
+   const image = req.files && req.files.image;
 
-   if(!image) return res.status(400).json({ msg: "Image is required" });
-   const result = await cloudinary.uploader.upload(image.tempFilePath);
-   const imageUrl = result.secure_url;
+   let imageUrl;
+   if (image) {
+     const result = await cloudinary.uploader.upload(image.tempFilePath);
+     imageUrl = result.secure_url;
+   }
     
    try {
     const product = await Product.findById(id);
@@ -74,7 +76,7 @@ async function updateProduct(req, res) {
        res.status(200).json({ msg: "Product updated successfully", product });
     }
    } catch (error) {
-    res.status(500).json({ msg: "Internal server error" });
+    res.status(500).json({ msg: "Internal server error", error: error.message });
    }
 
 }
