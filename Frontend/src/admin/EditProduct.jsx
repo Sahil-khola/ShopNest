@@ -15,7 +15,8 @@ const EditProduct = () => {
     const fetchProduct = async () => {
       const res = await fetch(`/api/products/${id}`);
       const data = await res.json();
-      setFormData({ name: data.name, description: data.description, price: data.price, category: data.category, stock: data.stock });
+      const product = data.product || data;
+      setFormData({ name: product.name, description: product.description, price: product.price, category: product.category, stock: product.stock });
     };
     fetchProduct();
   }, [id]);

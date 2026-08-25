@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import "../styles/auth.css";
 const Register = () => {
   const [name, setName] = useState("");
@@ -19,12 +20,14 @@ const Register = () => {
       });
       const data = await res.json();
       if(res.ok){
-        alert("Registration successful");
+        toast.success("Registration successful");
         login(data.user);
         navigate("/");
+      } else {
+        toast.error(data.message || "Registration failed");
       }
     } catch (error) {
-      alert(error.message || "Registration failed")
+      toast.error(error.message || "Registration failed")
       console.error(error);
     }
   };

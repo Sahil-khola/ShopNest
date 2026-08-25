@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate , Link} from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { toast } from 'react-toastify';
 import "../styles/auth.css";
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -18,12 +19,14 @@ const Login = () => {
             });
             const data = await res.json();
             if (res.ok) {
-                alert("Login successful");
+                toast.success("Login successful");
                 login(data.user);
                 navigate("/");
+            } else {
+                toast.error(data.message || "Invalid email or password");
             }
         } catch (error) {
-            alert(error.message);
+            toast.error(error.message || "Login failed");
             console.error(error);
         }
     }

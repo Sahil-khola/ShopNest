@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
   const { user, logout } = useContext(AuthContext);
@@ -19,7 +20,6 @@ const Profile = () => {
           headers: { Authorization: `Bearer ${user.token}` }
         });
         const data = await res.json();
-        console.log(data);
         if (res.ok) {
           setOrders(data.orders || []);
         } else {
@@ -27,11 +27,14 @@ const Profile = () => {
           if (res.status === 401) {
              logout();
              navigate('/login');
+             return;
           }
+          toast.error(data.msg || data.message || 'Failed to load orders');
           setOrders([]);
         }
       } catch (error) {
         console.error(error);
+        toast.error('Failed to load orders');
       } finally {
         setLoading(false);
       }
