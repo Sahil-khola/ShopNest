@@ -56,13 +56,13 @@ async function updateProduct(req, res) {
    const { name, description, price, category, stock } = req.body;
    const image = req.files && req.files.image;
 
-   let imageUrl;
-   if (image) {
-     const result = await cloudinary.uploader.upload(image.tempFilePath);
-     imageUrl = result.secure_url;
-   }
-    
    try {
+    let imageUrl;
+    if (image) {
+      const result = await cloudinary.uploader.upload(image.tempFilePath);
+      imageUrl = result.secure_url;
+    }
+
     const product = await Product.findById(id);
     if(!product) return res.status(404).json({ msg: "Product not found" });
     if(product){
