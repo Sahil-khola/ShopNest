@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../redux/cartSlice';
+import { toast } from 'react-toastify';
 import "../styles/productCard.css"
 const ProductDetail = () => {
   const { id } = useParams();
@@ -33,7 +34,7 @@ const ProductDetail = () => {
         imageUrl: product.imageUrl,
         quantity: 1
       }));
-      alert('Successfully added to your cart!');
+      toast.success('Successfully added to your cart!');
     }
   };
 

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { clearCart } from '../redux/cartSlice';
+import { toast } from 'react-toastify';
 
 const Checkout = () => {
   const { user } = useContext(AuthContext);
@@ -32,7 +33,7 @@ const Checkout = () => {
         if (fallback) {
           return bypassPayment();
         } else {
-          return alert("Payment failed to initialize");
+          return toast.error("Payment failed to initialize");
         }
       }
 
@@ -68,10 +69,10 @@ const Checkout = () => {
               dispatch(clearCart());
               navigate('/ordersuccess');
             } else {
-              alert('Order saving failed');
+              toast.error('Order saving failed');
             }
           } else {
-            alert('Payment verification failed');
+            toast.error('Payment verification failed');
           }
         },
         prefill: {
@@ -114,7 +115,7 @@ const Checkout = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!user) {
-      alert("Please login first");
+      toast.error("Please login first");
       navigate('/login');
       return;
     }

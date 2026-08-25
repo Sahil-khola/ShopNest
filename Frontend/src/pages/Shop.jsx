@@ -1,6 +1,7 @@
 import React , {useState, useEffect} from 'react'
 import ProductCard from '../components/ProductCard'
 import '../styles/productCard.css'
+import { toast } from 'react-toastify'
 const Shop = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -17,7 +18,7 @@ useEffect(() => {
         setProducts(Array.isArray(data) ? data : (data.products || []));
      
     } catch (error) {
-        alert(error.message);
+        toast.error(error.message);
     } finally {
         setLoading(false);
     }
