@@ -20,10 +20,10 @@ async function getProductById(req, res) {
   }
 }
 
-async function createProduct(req, res) {
+ async function createProduct(req, res) {
  try {
   const { name, description, price, category, stock } = req.body;
-  const {image} = req.files;
+  const image = req.files && req.files.image;
 
   // Validate input
   if (!name || !description || !price || !category || !stock) {
