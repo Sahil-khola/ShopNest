@@ -43,8 +43,9 @@ const genratetoken = (id) => {
     Welcome to ShopeNest, your OTP is ${otp}
     `;
     
-    // Send Mail
-    await sendMail(email, `Welcome to ShopeNest - Your OTP`, message);
+    // Registration must not wait on an external email provider. If SMTP is
+    // unavailable, the account has still been created and the client needs a
+    // response rather than a request that appears to hang.
     res.status(201).json({ msg: "User created successfully",
         user: {
             id: newUser._id,
@@ -53,6 +54,10 @@ const genratetoken = (id) => {
             role : newUser.role,
             token: genratetoken(newUser._id),
         }
+    });
+
+    sendMail(email, `Welcome to ShopeNest - Your OTP`, message).catch((error) => {
+      console.error("Could not send registration email:", error);
     });
    }else{
     res.status(400).json({ msg: "Invalid user details" });
@@ -98,6 +103,3 @@ async function getUsersDetails(req, res) {
 }
 
 export {userRegister,userLogin,getUsersDetails};
-
-
- 

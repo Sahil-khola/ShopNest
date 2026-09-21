@@ -23,7 +23,7 @@ const Login = () => {
                 login(data.user);
                 navigate("/");
             } else {
-                toast.error(data.message || "Invalid email or password");
+                toast.error(data.msg || data.message || "Invalid email or password");
             }
         } catch (error) {
             toast.error(error.message || "Login failed");

@@ -7,11 +7,14 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     try {
       const res = await fetch("/api/auth/register", {
         method: "POST",
@@ -24,11 +27,13 @@ const Register = () => {
         login(data.user);
         navigate("/");
       } else {
-        toast.error(data.message || "Registration failed");
+        toast.error(data.msg || data.message || "Registration failed");
       }
     } catch (error) {
       toast.error(error.message || "Registration failed")
       console.error(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -39,7 +44,9 @@ const Register = () => {
         <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}  required/>
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
-        <button type="submit" className="btn">Register</button>
+        <button type="submit" className="btn" disabled={isSubmitting}>
+          {isSubmitting ? "Registering..." : "Register"}
+        </button>
         <p>Already have an account? <Link to="/login">Login</Link></p>
       </form>
   </div>
